@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "TERRORIST", "label": "TERRORIST", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ISRAEL", "label": "ISRAEL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PRIME MINISTER", "label": "PRIME MINISTER", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ISRAELI", "label": "ISRAELI", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "HOSPITAL", "label": "HOSPITAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "HAMAS", "label": "HAMAS", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CIVILIAN", "label": "CIVILIAN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "GAZA", "label": "GAZA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PALESTINIAN", "label": "PALESTINIAN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "VILLAGE", "label": "VILLAGE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "NaN", "label": "NaN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "MILITARY", "label": "MILITARY", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "UNITED STATES", "label": "UNITED STATES", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "WEST BANK", "label": "WEST BANK", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TURKEY", "label": "TURKEY", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ARMY", "label": "ARMY", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LEBANESE", "label": "LEBANESE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "WASHINGTON", "label": "WASHINGTON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TURKISH", "label": "TURKISH", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "JORDAN", "label": "JORDAN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "SYRIA", "label": "SYRIA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "UNITED NATIONS", "label": "UNITED NATIONS", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "NEW YORK", "label": "NEW YORK", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LEBANON", "label": "LEBANON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "THE UN", "label": "THE UN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "GOVERNMENT", "label": "GOVERNMENT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "RUSSIA", "label": "RUSSIA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "MEDIA", "label": "MEDIA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "JEWISH", "label": "JEWISH", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "REGIME", "label": "REGIME", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "IRAN", "label": "IRAN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "SAUDI ARABIA", "label": "SAUDI ARABIA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "BRAZIL", "label": "BRAZIL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ACTIVIST", "label": "ACTIVIST", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "JERUSALEM", "label": "JERUSALEM", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PRESIDENT", "label": "PRESIDENT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "THE US", "label": "THE US", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "POLICE", "label": "POLICE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "QATAR", "label": "QATAR", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TEL AVIV", "label": "TEL AVIV", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "YEMEN", "label": "YEMEN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "MILITANT", "label": "MILITANT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "MINIST", "label": "MINIST", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "AMERICAN", "label": "AMERICAN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "IRANIAN", "label": "IRANIAN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "EGYPT", "label": "EGYPT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PALESTINE", "label": "PALESTINE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "UNITED KINGDOM", "label": "UNITED KINGDOM", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CANADA", "label": "CANADA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "GERMANY", "label": "GERMANY", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "TERRORIST", "to": "ISRAEL", "width": 1}, {"from": "TERRORIST", "to": "PRIME MINISTER", "width": 1}, {"from": "TERRORIST", "to": "ISRAELI", "width": 1}, {"from": "TERRORIST", "to": "HOSPITAL", "width": 1}, {"from": "TERRORIST", "to": "HAMAS", "width": 1}, {"from": "TERRORIST", "to": "CIVILIAN", "width": 1}, {"from": "TERRORIST", "to": "GAZA", "width": 1}, {"from": "TERRORIST", "to": "PALESTINIAN", "width": 1}, {"from": "TERRORIST", "to": "VILLAGE", "width": 1}, {"from": "TERRORIST", "to": "NaN", "width": 1}, {"from": "MILITARY", "to": "UNITED STATES", "width": 1}, {"from": "MILITARY", "to": "ISRAELI", "width": 1}, {"from": "MILITARY", "to": "TERRORIST", "width": 1}, {"from": "MILITARY", "to": "NaN", "width": 1}, {"from": "MILITARY", "to": "GAZA", "width": 1}, {"from": "MILITARY", "to": "ISRAEL", "width": 1}, {"from": "MILITARY", "to": "WEST BANK", "width": 1}, {"from": "MILITARY", "to": "TURKEY", "width": 1}, {"from": "MILITARY", "to": "MILITARY", "width": 1}, {"from": "MILITARY", "to": "CIVILIAN", "width": 1}, {"from": "ARMY", "to": "HAMAS", "width": 1}, {"from": "ARMY", "to": "NaN", "width": 1}, {"from": "ARMY", "to": "GAZA", "width": 1}, {"from": "ARMY", "to": "LEBANESE", "width": 1}, {"from": "ARMY", "to": "WEST BANK", "width": 1}, {"from": "ARMY", "to": "WASHINGTON", "width": 1}, {"from": "ARMY", "to": "UNITED STATES", "width": 1}, {"from": "ARMY", "to": "TERRORIST", "width": 1}, {"from": "ARMY", "to": "ISRAEL", "width": 1}, {"from": "VILLAGE", "to": "WEST BANK", "width": 1}, {"from": "VILLAGE", "to": "ISRAELI", "width": 1}, {"from": "VILLAGE", "to": "NaN", "width": 1}, {"from": "VILLAGE", "to": "ISRAEL", "width": 1}, {"from": "TURKISH", "to": "NaN", "width": 1}, {"from": "TURKISH", "to": "TURKISH", "width": 1}, {"from": "TURKISH", "to": "JORDAN", "width": 1}, {"from": "TURKISH", "to": "SYRIA", "width": 1}, {"from": "TURKISH", "to": "GAZA", "width": 1}, {"from": "UNITED NATIONS", "to": "NaN", "width": 1}, {"from": "UNITED NATIONS", "to": "GAZA", "width": 1}, {"from": "UNITED NATIONS", "to": "ISRAELI", "width": 1}, {"from": "UNITED NATIONS", "to": "LEBANESE", "width": 1}, {"from": "UNITED NATIONS", "to": "ISRAEL", "width": 1}, {"from": "UNITED NATIONS", "to": "NEW YORK", "width": 1}, {"from": "UNITED NATIONS", "to": "TERRORIST", "width": 1}, {"from": "UNITED NATIONS", "to": "LEBANON", "width": 1}, {"from": "HOSPITAL", "to": "ISRAELI", "width": 1}, {"from": "HOSPITAL", "to": "PALESTINIAN", "width": 1}, {"from": "HOSPITAL", "to": "GAZA", "width": 1}, {"from": "HOSPITAL", "to": "THE UN", "width": 1}, {"from": "HOSPITAL", "to": "ISRAEL", "width": 1}, {"from": "HOSPITAL", "to": "NaN", "width": 1}, {"from": "TURKEY", "to": "GAZA", "width": 1}, {"from": "TURKEY", "to": "TERRORIST", "width": 1}, {"from": "TURKEY", "to": "ISRAELI", "width": 1}, {"from": "TURKEY", "to": "SYRIA", "width": 1}, {"from": "TURKEY", "to": "TURKEY", "width": 1}, {"from": "TURKEY", "to": "JORDAN", "width": 1}, {"from": "TURKEY", "to": "NaN", "width": 1}, {"from": "TURKEY", "to": "ISRAEL", "width": 1}, {"from": "GOVERNMENT", "to": "RUSSIA", "width": 1}, {"from": "GOVERNMENT", "to": "MEDIA", "width": 1}, {"from": "GOVERNMENT", "to": "NaN", "width": 1}, {"from": "GOVERNMENT", "to": "PALESTINIAN", "width": 1}, {"from": "GOVERNMENT", "to": "ISRAEL", "width": 1}, {"from": "GOVERNMENT", "to": "GAZA", "width": 1}, {"from": "GOVERNMENT", "to": "THE UN", "width": 1}, {"from": "GOVERNMENT", "to": "WEST BANK", "width": 1}, {"from": "NEW YORK", "to": "ISRAEL", "width": 1}, {"from": "NEW YORK", "to": "NaN", "width": 1}, {"from": "WEST BANK", "to": "HAMAS", "width": 1}, {"from": "WEST BANK", "to": "PALESTINIAN", "width": 1}, {"from": "WEST BANK", "to": "ISRAELI", "width": 1}, {"from": "WEST BANK", "to": "TERRORIST", "width": 1}, {"from": "WEST BANK", "to": "JORDAN", "width": 1}, {"from": "WEST BANK", "to": "JEWISH", "width": 1}, {"from": "WEST BANK", "to": "PRIME MINISTER", "width": 1}, {"from": "WEST BANK", "to": "WEST BANK", "width": 1}, {"from": "WEST BANK", "to": "ISRAEL", "width": 1}, {"from": "WEST BANK", "to": "NaN", "width": 1}, {"from": "WEST BANK", "to": "THE UN", "width": 1}, {"from": "WEST BANK", "to": "UNITED STATES", "width": 1}, {"from": "WEST BANK", "to": "REGIME", "width": 1}, {"from": "LEBANESE", "to": "SYRIA", "width": 1}, {"from": "LEBANESE", "to": "LEBANESE", "width": 1}, {"from": "LEBANESE", "to": "NaN", "width": 1}, {"from": "LEBANESE", "to": "UNITED STATES", "width": 1}, {"from": "LEBANESE", "to": "LEBANON", "width": 1}, {"from": "LEBANESE", "to": "IRAN", "width": 1}, {"from": "LEBANESE", "to": "SAUDI ARABIA", "width": 1}, {"from": "LEBANESE", "to": "ISRAEL", "width": 1}, {"from": "LEBANESE", "to": "ISRAELI", "width": 1}, {"from": "LEBANESE", "to": "CIVILIAN", "width": 1}, {"from": "ISRAELI", "to": "BRAZIL", "width": 1}, {"from": "ISRAELI", "to": "NaN", "width": 1}, {"from": "ISRAELI", "to": "IRAN", "width": 1}, {"from": "ISRAELI", "to": "TURKISH", "width": 1}, {"from": "ISRAELI", "to": "ACTIVIST", "width": 1}, {"from": "ISRAELI", "to": "JERUSALEM", "width": 1}, {"from": "ISRAELI", "to": "ISRAEL", "width": 1}, {"from": "ISRAELI", "to": "GOVERNMENT", "width": 1}, {"from": "ISRAELI", "to": "LEBANON", "width": 1}, {"from": "ISRAELI", "to": "SYRIA", "width": 1}, {"from": "ISRAELI", "to": "ARMY", "width": 1}, {"from": "ISRAELI", "to": "PRESIDENT", "width": 1}, {"from": "ISRAELI", "to": "PALESTINIAN", "width": 1}, {"from": "ISRAELI", "to": "THE US", "width": 1}, {"from": "ISRAELI", "to": "THE UN", "width": 1}, {"from": "ISRAELI", "to": "GAZA", "width": 1}, {"from": "ISRAELI", "to": "POLICE", "width": 1}, {"from": "ISRAELI", "to": "QATAR", "width": 1}, {"from": "ISRAELI", "to": "TEL AVIV", "width": 1}, {"from": "ISRAELI", "to": "YEMEN", "width": 1}, {"from": "ISRAELI", "to": "WASHINGTON", "width": 1}, {"from": "ISRAELI", "to": "MILITANT", "width": 1}, {"from": "ISRAELI", "to": "UNITED STATES", "width": 1}, {"from": "ISRAELI", "to": "MINIST", "width": 1}, {"from": "ISRAELI", "to": "PRIME MINISTER", "width": 1}, {"from": "ISRAELI", "to": "JEWISH", "width": 1}, {"from": "ISRAELI", "to": "HAMAS", "width": 1}, {"from": "ISRAELI", "to": "CIVILIAN", "width": 1}, {"from": "ISRAELI", "to": "AMERICAN", "width": 1}, {"from": "ISRAELI", "to": "IRANIAN", "width": 1}, {"from": "ISRAELI", "to": "ISRAELI", "width": 1}, {"from": "ISRAELI", "to": "MEDIA", "width": 1}, {"from": "SYRIA", "to": "LEBANON", "width": 1}, {"from": "SYRIA", "to": "SYRIA", "width": 1}, {"from": "SYRIA", "to": "CIVILIAN", "width": 1}, {"from": "SYRIA", "to": "REGIME", "width": 1}, {"from": "SYRIA", "to": "IRAN", "width": 1}, {"from": "SYRIA", "to": "PALESTINIAN", "width": 1}, {"from": "SYRIA", "to": "RUSSIA", "width": 1}, {"from": "SYRIA", "to": "GOVERNMENT", "width": 1}, {"from": "SYRIA", "to": "THE UN", "width": 1}, {"from": "SYRIA", "to": "IRANIAN", "width": 1}, {"from": "SYRIA", "to": "EGYPT", "width": 1}, {"from": "SYRIA", "to": "PALESTINE", "width": 1}, {"from": "SYRIA", "to": "ISRAEL", "width": 1}, {"from": "SYRIA", "to": "PRIME MINISTER", "width": 1}, {"from": "SYRIA", "to": "MILITARY", "width": 1}, {"from": "SYRIA", "to": "JORDAN", "width": 1}, {"from": "SYRIA", "to": "NaN", "width": 1}, {"from": "PALESTINE", "to": "NaN", "width": 1}, {"from": "PALESTINE", "to": "ISRAEL", "width": 1}, {"from": "PALESTINE", "to": "PALESTINIAN", "width": 1}, {"from": "PALESTINE", "to": "TEL AVIV", "width": 1}, {"from": "PALESTINE", "to": "REGIME", "width": 1}, {"from": "PALESTINE", "to": "HAMAS", "width": 1}, {"from": "PALESTINE", "to": "GAZA", "width": 1}, {"from": "PALESTINE", "to": "MEDIA", "width": 1}, {"from": "PALESTINE", "to": "JEWISH", "width": 1}, {"from": "PALESTINE", "to": "BRAZIL", "width": 1}, {"from": "RUSSIA", "to": "ISRAEL", "width": 1}, {"from": "RUSSIA", "to": "IRAN", "width": 1}, {"from": "RUSSIA", "to": "RUSSIA", "width": 1}, {"from": "RUSSIA", "to": "THE UN", "width": 1}, {"from": "RUSSIA", "to": "NaN", "width": 1}, {"from": "WASHINGTON", "to": "ACTIVIST", "width": 1}, {"from": "WASHINGTON", "to": "TEL AVIV", "width": 1}, {"from": "WASHINGTON", "to": "NaN", "width": 1}, {"from": "WASHINGTON", "to": "CIVILIAN", "width": 1}, {"from": "WASHINGTON", "to": "ISRAEL", "width": 1}, {"from": "WASHINGTON", "to": "JERUSALEM", "width": 1}, {"from": "WASHINGTON", "to": "UNITED KINGDOM", "width": 1}, {"from": "WASHINGTON", "to": "PRESIDENT", "width": 1}, {"from": "WASHINGTON", "to": "AMERICAN", "width": 1}, {"from": "NaN", "to": "UNITED KINGDOM", "width": 1}, {"from": "NaN", "to": "JERUSALEM", "width": 1}, {"from": "NaN", "to": "MINIST", "width": 1}, {"from": "NaN", "to": "MILITANT", "width": 1}, {"from": "NaN", "to": "CIVILIAN", "width": 1}, {"from": "NaN", "to": "ACTIVIST", "width": 1}, {"from": "NaN", "to": "UNITED STATES", "width": 1}, {"from": "NaN", "to": "REGIME", "width": 1}, {"from": "NaN", "to": "LEBANON", "width": 1}, {"from": "NaN", "to": "POLICE", "width": 1}, {"from": "NaN", "to": "ISRAEL", "width": 1}, {"from": "NaN", "to": "QATAR", "width": 1}, {"from": "NaN", "to": "THE UN", "width": 1}, {"from": "NaN", "to": "IRAN", "width": 1}, {"from": "NaN", "to": "HAMAS", "width": 1}, {"from": "NaN", "to": "CANADA", "width": 1}, {"from": "NaN", "to": "PALESTINIAN", "width": 1}, {"from": "NaN", "to": "TEL AVIV", "width": 1}, {"from": "NaN", "to": "GAZA", "width": 1}, {"from": "NaN", "to": "PRIME MINISTER", "width": 1}, {"from": "NaN", "to": "PRESIDENT", "width": 1}, {"from": "NaN", "to": "BRAZIL", "width": 1}, {"from": "NaN", "to": "JEWISH", "width": 1}, {"from": "SAUDI ARABIA", "to": "LEBANON", "width": 1}, {"from": "SAUDI ARABIA", "to": "UNITED KINGDOM", "width": 1}, {"from": "SAUDI ARABIA", "to": "ISRAEL", "width": 1}, {"from": "QATAR", "to": "UNITED STATES", "width": 1}, {"from": "QATAR", "to": "THE US", "width": 1}, {"from": "QATAR", "to": "ISRAEL", "width": 1}, {"from": "QATAR", "to": "GAZA", "width": 1}, {"from": "QATAR", "to": "HAMAS", "width": 1}, {"from": "QATAR", "to": "EGYPT", "width": 1}, {"from": "MILITANT", "to": "GAZA", "width": 1}, {"from": "MILITANT", "to": "REGIME", "width": 1}, {"from": "MILITANT", "to": "ISRAEL", "width": 1}, {"from": "PRIME MINISTER", "to": "GAZA", "width": 1}, {"from": "PRIME MINISTER", "to": "HAMAS", "width": 1}, {"from": "PRIME MINISTER", "to": "ISRAEL", "width": 1}, {"from": "PRIME MINISTER", "to": "MEDIA", "width": 1}, {"from": "ISRAEL", "to": "JORDAN", "width": 1}, {"from": "ISRAEL", "to": "MEDIA", "width": 1}, {"from": "ISRAEL", "to": "CANADA", "width": 1}, {"from": "ISRAEL", "to": "REGIME", "width": 1}, {"from": "ISRAEL", "to": "HAMAS", "width": 1}, {"from": "ISRAEL", "to": "JEWISH", "width": 1}, {"from": "ISRAEL", "to": "LEBANON", "width": 1}, {"from": "ISRAEL", "to": "CIVILIAN", "width": 1}, {"from": "ISRAEL", "to": "THE US", "width": 1}, {"from": "ISRAEL", "to": "MINIST", "width": 1}, {"from": "ISRAEL", "to": "UNITED KINGDOM", "width": 1}, {"from": "ISRAEL", "to": "AMERICAN", "width": 1}, {"from": "ISRAEL", "to": "EGYPT", "width": 1}, {"from": "ISRAEL", "to": "GAZA", "width": 1}, {"from": "ISRAEL", "to": "IRAN", "width": 1}, {"from": "ISRAEL", "to": "THE UN", "width": 1}, {"from": "ISRAEL", "to": "YEMEN", "width": 1}, {"from": "ISRAEL", "to": "POLICE", "width": 1}, {"from": "ISRAEL", "to": "GERMANY", "width": 1}, {"from": "ISRAEL", "to": "PRESIDENT", "width": 1}, {"from": "ISRAEL", "to": "IRANIAN", "width": 1}, {"from": "ISRAEL", "to": "ISRAEL", "width": 1}, {"from": "ISRAEL", "to": "TEL AVIV", "width": 1}, {"from": "ISRAEL", "to": "ACTIVIST", "width": 1}, {"from": "ISRAEL", "to": "BRAZIL", "width": 1}, {"from": "ISRAEL", "to": "UNITED STATES", "width": 1}, {"from": "ISRAEL", "to": "PALESTINIAN", "width": 1}, {"from": "CANADA", "to": "HOSPITAL", "width": 1}, {"from": "CANADA", "to": "JEWISH", "width": 1}, {"from": "CANADA", "to": "GERMANY", "width": 1}, {"from": "CANADA", "to": "PALESTINIAN", "width": 1}, {"from": "HAMAS", "to": "GOVERNMENT", "width": 1}, {"from": "HAMAS", "to": "HAMAS", "width": 1}, {"from": "HAMAS", "to": "EGYPT", "width": 1}, {"from": "HAMAS", "to": "CANADA", "width": 1}, {"from": "HAMAS", "to": "HOSPITAL", "width": 1}, {"from": "HAMAS", "to": "GAZA", "width": 1}, {"from": "HAMAS", "to": "IRAN", "width": 1}, {"from": "HAMAS", "to": "VILLAGE", "width": 1}, {"from": "HAMAS", "to": "CIVILIAN", "width": 1}, {"from": "HAMAS", "to": "MILITANT", "width": 1}, {"from": "HAMAS", "to": "PRESIDENT", "width": 1}, {"from": "HAMAS", "to": "MEDIA", "width": 1}, {"from": "HAMAS", "to": "JEWISH", "width": 1}, {"from": "HAMAS", "to": "RUSSIA", "width": 1}, {"from": "HAMAS", "to": "ACTIVIST", "width": 1}, {"from": "HAMAS", "to": "SAUDI ARABIA", "width": 1}, {"from": "HAMAS", "to": "PALESTINIAN", "width": 1}, {"from": "MEDIA", "to": "UNITED KINGDOM", "width": 1}, {"from": "MEDIA", "to": "NaN", "width": 1}, {"from": "MEDIA", "to": "EGYPT", "width": 1}, {"from": "MEDIA", "to": "REGIME", "width": 1}, {"from": "MEDIA", "to": "WEST BANK", "width": 1}, {"from": "MEDIA", "to": "TERRORIST", "width": 1}, {"from": "MEDIA", "to": "AMERICAN", "width": 1}, {"from": "MEDIA", "to": "GAZA", "width": 1}, {"from": "MEDIA", "to": "ARMY", "width": 1}, {"from": "MEDIA", "to": "PALESTINIAN", "width": 1}, {"from": "EGYPT", "to": "GAZA", "width": 1}, {"from": "EGYPT", "to": "NaN", "width": 1}, {"from": "EGYPT", "to": "UNITED STATES", "width": 1}, {"from": "EGYPT", "to": "JEWISH", "width": 1}, {"from": "EGYPT", "to": "JORDAN", "width": 1}, {"from": "EGYPT", "to": "PALESTINIAN", "width": 1}, {"from": "EGYPT", "to": "THE US", "width": 1}, {"from": "AMERICAN", "to": "NaN", "width": 1}, {"from": "AMERICAN", "to": "PALESTINIAN", "width": 1}, {"from": "AMERICAN", "to": "YEMEN", "width": 1}, {"from": "AMERICAN", "to": "THE US", "width": 1}, {"from": "MINIST", "to": "BRAZIL", "width": 1}, {"from": "MINIST", "to": "PALESTINIAN", "width": 1}, {"from": "MINIST", "to": "UNITED KINGDOM", "width": 1}, {"from": "MINIST", "to": "LEBANON", "width": 1}, {"from": "UNITED KINGDOM", "to": "ISRAELI", "width": 1}, {"from": "UNITED KINGDOM", "to": "IRAN", "width": 1}, {"from": "UNITED KINGDOM", "to": "UNITED STATES", "width": 1}, {"from": "UNITED KINGDOM", "to": "THE UN", "width": 1}, {"from": "UNITED KINGDOM", "to": "LEBANON", "width": 1}, {"from": "UNITED KINGDOM", "to": "UNITED KINGDOM", "width": 1}, {"from": "UNITED KINGDOM", "to": "SYRIA", "width": 1}, {"from": "UNITED KINGDOM", "to": "THE US", "width": 1}, {"from": "UNITED KINGDOM", "to": "PALESTINIAN", "width": 1}, {"from": "GERMANY", "to": "GERMANY", "width": 1}, {"from": "GERMANY", "to": "HOSPITAL", "width": 1}, {"from": "GERMANY", "to": "ISRAELI", "width": 1}, {"from": "GERMANY", "to": "NaN", "width": 1}, {"from": "GERMANY", "to": "GOVERNMENT", "width": 1}, {"from": "GERMANY", "to": "PALESTINE", "width": 1}, {"from": "TEL AVIV", "to": "IRAN", "width": 1}, {"from": "TEL AVIV", "to": "WEST BANK", "width": 1}, {"from": "TEL AVIV", "to": "POLICE", "width": 1}, {"from": "YEMEN", "to": "SYRIA", "width": 1}, {"from": "YEMEN", "to": "NaN", "width": 1}, {"from": "YEMEN", "to": "PALESTINIAN", "width": 1}, {"from": "YEMEN", "to": "MILITARY", "width": 1}, {"from": "YEMEN", "to": "GAZA", "width": 1}, {"from": "YEMEN", "to": "THE US", "width": 1}, {"from": "REGIME", "to": "RUSSIA", "width": 1}, {"from": "REGIME", "to": "GAZA", "width": 1}, {"from": "JORDAN", "to": "REGIME", "width": 1}, {"from": "JORDAN", "to": "GAZA", "width": 1}, {"from": "JORDAN", "to": "NEW YORK", "width": 1}, {"from": "JORDAN", "to": "JORDAN", "width": 1}, {"from": "JORDAN", "to": "ISRAELI", "width": 1}, {"from": "JORDAN", "to": "JERUSALEM", "width": 1}, {"from": "JORDAN", "to": "SAUDI ARABIA", "width": 1}, {"from": "IRAN", "to": "IRAN", "width": 1}, {"from": "IRAN", "to": "PRESIDENT", "width": 1}, {"from": "IRAN", "to": "LEBANON", "width": 1}, {"from": "IRAN", "to": "IRANIAN", "width": 1}, {"from": "IRAN", "to": "THE US", "width": 1}, {"from": "IRAN", "to": "HOSPITAL", "width": 1}, {"from": "IRAN", "to": "SAUDI ARABIA", "width": 1}, {"from": "POLICE", "to": "TERRORIST", "width": 1}, {"from": "POLICE", "to": "PRESIDENT", "width": 1}, {"from": "POLICE", "to": "UNITED STATES", "width": 1}, {"from": "POLICE", "to": "GAZA", "width": 1}, {"from": "POLICE", "to": "WEST BANK", "width": 1}, {"from": "CIVILIAN", "to": "MILITANT", "width": 1}, {"from": "CIVILIAN", "to": "HOSPITAL", "width": 1}, {"from": "CIVILIAN", "to": "BRAZIL", "width": 1}, {"from": "CIVILIAN", "to": "GAZA", "width": 1}, {"from": "CIVILIAN", "to": "TURKEY", "width": 1}, {"from": "LEBANON", "to": "LEBANON", "width": 1}, {"from": "LEBANON", "to": "PALESTINE", "width": 1}, {"from": "LEBANON", "to": "THE UN", "width": 1}, {"from": "LEBANON", "to": "UNITED STATES", "width": 1}, {"from": "LEBANON", "to": "GOVERNMENT", "width": 1}, {"from": "LEBANON", "to": "ARMY", "width": 1}, {"from": "LEBANON", "to": "GAZA", "width": 1}, {"from": "LEBANON", "to": "HAMAS", "width": 1}, {"from": "LEBANON", "to": "CIVILIAN", "width": 1}, {"from": "LEBANON", "to": "NEW YORK", "width": 1}, {"from": "LEBANON", "to": "MILITARY", "width": 1}, {"from": "LEBANON", "to": "REGIME", "width": 1}, {"from": "PRESIDENT", "to": "MEDIA", "width": 1}, {"from": "PRESIDENT", "to": "GAZA", "width": 1}, {"from": "PRESIDENT", "to": "UNITED STATES", "width": 1}, {"from": "PRESIDENT", "to": "PALESTINIAN", "width": 1}, {"from": "THE UN", "to": "GAZA", "width": 1}, {"from": "THE UN", "to": "NEW YORK", "width": 1}, {"from": "THE UN", "to": "CIVILIAN", "width": 1}, {"from": "THE UN", "to": "PALESTINIAN", "width": 1}, {"from": "THE UN", "to": "JERUSALEM", "width": 1}, {"from": "BRAZIL", "to": "POLICE", "width": 1}, {"from": "BRAZIL", "to": "BRAZIL", "width": 1}, {"from": "BRAZIL", "to": "HAMAS", "width": 1}, {"from": "BRAZIL", "to": "PALESTINIAN", "width": 1}, {"from": "ACTIVIST", "to": "GAZA", "width": 1}, {"from": "THE US", "to": "GAZA", "width": 1}, {"from": "THE US", "to": "LEBANON", "width": 1}, {"from": "THE US", "to": "UNITED STATES", "width": 1}, {"from": "THE US", "to": "LEBANESE", "width": 1}, {"from": "THE US", "to": "TURKEY", "width": 1}, {"from": "THE US", "to": "NaN", "width": 1}, {"from": "IRANIAN", "to": "NaN", "width": 1}, {"from": "IRANIAN", "to": "HAMAS", "width": 1}, {"from": "IRANIAN", "to": "IRANIAN", "width": 1}, {"from": "IRANIAN", "to": "MILITANT", "width": 1}, {"from": "IRANIAN", "to": "LEBANON", "width": 1}, {"from": "IRANIAN", "to": "YEMEN", "width": 1}, {"from": "PALESTINIAN", "to": "VILLAGE", "width": 1}, {"from": "PALESTINIAN", "to": "UNITED STATES", "width": 1}, {"from": "PALESTINIAN", "to": "MILITANT", "width": 1}, {"from": "PALESTINIAN", "to": "PALESTINIAN", "width": 1}, {"from": "PALESTINIAN", "to": "JEWISH", "width": 1}, {"from": "PALESTINIAN", "to": "GAZA", "width": 1}, {"from": "PALESTINIAN", "to": "MILITARY", "width": 1}, {"from": "PALESTINIAN", "to": "CIVILIAN", "width": 1}, {"from": "PALESTINIAN", "to": "REGIME", "width": 1}, {"from": "PALESTINIAN", "to": "GERMANY", "width": 1}, {"from": "JEWISH", "to": "GAZA", "width": 1}, {"from": "JEWISH", "to": "UNITED STATES", "width": 1}, {"from": "JEWISH", "to": "LEBANON", "width": 1}, {"from": "UNITED STATES", "to": "GAZA", "width": 1}, {"from": "UNITED STATES", "to": "GOVERNMENT", "width": 1}, {"from": "UNITED STATES", "to": "PALESTINE", "width": 1}, {"from": "UNITED STATES", "to": "TERRORIST", "width": 1}, {"from": "UNITED STATES", "to": "UNITED STATES", "width": 1}, {"from": "UNITED STATES", "to": "NEW YORK", "width": 1}, {"from": "GAZA", "to": "JERUSALEM", "width": 1}, {"from": "GAZA", "to": "NEW YORK", "width": 1}, {"from": "GAZA", "to": "SYRIA", "width": 1}, {"from": "GAZA", "to": "BRAZIL", "width": 1}, {"from": "GAZA", "to": "GAZA", "width": 1}, {"from": "JERUSALEM", "to": "WEST BANK", "width": 1}, {"from": "JERUSALEM", "to": "VILLAGE", "width": 1}, {"from": "JERUSALEM", "to": "JEWISH", "width": 1}, {"from": "JERUSALEM", "to": "MEDIA", "width": 1}, {"from": "JERUSALEM", "to": "LEBANON", "width": 1}, {"from": "JERUSALEM", "to": "ISRAEL", "width": 1}, {"from": "JERUSALEM", "to": "HAMAS", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
