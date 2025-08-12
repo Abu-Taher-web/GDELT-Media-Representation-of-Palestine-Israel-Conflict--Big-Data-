@@ -21,8 +21,8 @@
     <img src="https://img.shields.io/badge/Cartopy-blue?style=flat&logo=python&logoColor=white&labelColor=gray" alt="Cartopy"/>  
   </p>  
 
-  <img src="https://img.shields.io/github/license/Abu-Taher-web/Big-Data-Project?style=for-the-badge&color=5D6D7E" alt="GitHub license" />  
-  <img src="https://img.shields.io/github/last-commit/Abu-Taher-web/Big-Data-Project?style=for-the-badge&color=5D6D7E" alt="git-last-commit" />  
-  <img src="https://img.shields.io/github/commit-activity/m/Abu-Taher-web/Big-Data-Project?style=for-the-badge&color=5D6D7E" alt="GitHub commit activity" />  
-  <img src="https://img.shields.io/github/languages/top/Abu-Taher-web/Big-Data-Project?style=for-the-badge&color=5D6D7E" alt="GitHub top language" />  
+  <img src="https://img.shields.io/github/license/Abu-Taher-web/GDELT-Media-Representation-of-Palestine-Israel-Conflict--Big-Data-?style=for-the-badge&color=5D6D7E" alt="GitHub license" />  
+  <img src="https://img.shields.io/github/last-commit/Abu-Taher-web/GDELT-Media-Representation-of-Palestine-Israel-Conflict--Big-Data-?style=for-the-badge&color=5D6D7E" alt="git-last-commit" />  
+  <img src="https://img.shields.io/github/commit-activity/m/Abu-Taher-web/GDELT-Media-Representation-of-Palestine-Israel-Conflict--Big-Data-?style=for-the-badge&color=5D6D7E" alt="GitHub commit activity" />  
+  <img src="https://img.shields.io/github/languages/top/Abu-Taher-web/GDELT-Media-Representation-of-Palestine-Israel-Conflict--Big-Data-?style=for-the-badge&color=5D6D7E" alt="GitHub top language" />  
 </div>
